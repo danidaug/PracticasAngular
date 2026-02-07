@@ -1,0 +1,13 @@
+<img height="350px" src="{{event.image}}" class="card-img-top">
+<div class="card-body">
+  <h4 class="card-title">{{event.title}}</h4>
+  <p class="card-text">{{event.description}}</p>
+  <div class="text-end">
+    <button class="btn btn-danger ml-3" (click)="deleteEvento()">Delete</button>
+  </div>
+
+</div>
+<div class="card-footer text-muted">
+  {{event.date}}
+  <span class="float-right">{{event.price}}€</span>
+</div>
