@@ -1,0 +1,28 @@
+{
+  "eventos": [
+    {
+      "id": "1",
+      "title": "Partido Valencia",
+      "image": "partido01.jpg",
+      "date": "2026-02-10",
+      "description": "Partido basket Valencia contra barça",
+      "price": 20
+    },
+    {
+      "id": "1",
+      "title": "Partido Clarent",
+      "image": "partido02.jpg",
+      "date": "2026-02-14",
+      "description": "Partido basket clarent contra juventus",
+      "price": 25
+    },
+    {
+      "id": "31ff",
+      "title": "dsad",
+      "description": "dasdasd",
+      "image": "https://ethic.es/wp-content/uploads/2023/03/imagen.jpg",
+      "date": "2026-02-11",
+      "price": 23
+    }
+  ]
+}

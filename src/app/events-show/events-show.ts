@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IEvent } from '../interfaces/ievent';
 import { FormsModule } from '@angular/forms';
 import { EventFilterPipe } from "../pipes/event-filter-pipe";
@@ -9,25 +9,26 @@ import { EventoService } from '../services/evento.service';
 @Component({
   selector: 'app-events-show',
   standalone: true,
-  imports: [FormsModule, EventFilterPipe, EventoItem, EventoAdd],
+  imports: [FormsModule, EventFilterPipe, EventoItem],
   templateUrl: './events-show.html',
   styleUrl: './events-show.css',
 })
-export class EventsShow implements OnInit {
-  filterSearch: string = '';
-  events: IEvent[] = [];
+export class EventsShow {
+  eventos: IEvent[] = [];
+  filterSearch: string = ''; // <--- Añade esta línea
 
-  constructor(private eventoService: EventoService) {}
-
-  ngOnInit(): void {
-    this.events = this.eventoService.getEventos();
+  constructor(private eventosService: EventoService) {
+    this.eventosService.getEventos().subscribe({
+      next: (data) => this.eventos = data,
+      error: (err) => console.error('Error al cargar eventos:', err) // Gestión de errores [cite: 388]
+    });
   }
 
-  deleteEvento(eventoABorrar: IEvent) {
-    this.events = this.events.filter(e => e !== eventoABorrar);
+  borrarEvento(id: string) {
+    this.eventos = this.eventos.filter(e => e.id !== id);
   }
 
   addEvento(nuevoEvento: IEvent) {
-    this.events = [...this.events, nuevoEvento];
+    this.eventos.push(nuevoEvento);
   }
 }

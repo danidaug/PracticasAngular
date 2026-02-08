@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
 import { IEvent } from '../interfaces/ievent';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventoService {
-  getEventos(): IEvent[] {
-    return [
-      {
-        title: 'Partido Valencia',
-        image: 'partido01.jpg',
-        date: '2026-02-10',
-        description: 'Partido basket Valencia contra barça',
-        price:20
+  private eventosEndpoint = 'http://localhost:3000/eventos';
 
-      },
-      {
-        title: 'Partido Clarent',
-        image: 'partido02.jpg',
-        date: '2026-02-10',
-        description: 'Partido basket Clarent contra Juventus',
-        price:22
+  constructor(private http: HttpClient) {}
+  getEventos(): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(this.eventosEndpoint).pipe(
+      catchError(this.handleError) // Capturamos posibles errores [cite: 13, 237]
+    );
+  }
 
-      }
-    ]
+  addEvento(evento: IEvent): Observable<IEvent> {
+    return this.http.post<IEvent>(this.eventosEndpoint, evento).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteEvento(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.eventosEndpoint}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error(`Código de error: ${error.status}, mensaje: ${error.message}`);
+    return throwError(() => new Error('Error en la comunicación con el servidor.'));
   }
 }

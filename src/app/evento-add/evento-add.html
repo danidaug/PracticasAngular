@@ -1,26 +1,41 @@
-<form (ngSubmit)="enviarFormulario()" class="mt-4 mb-4 p-3 border rounded bg-light">
-  <h3>Nuevo Evento Deportivo</h3>
-  <div class="mb-3">
-    <label>Título:</label>
-    <input type="text" [(ngModel)]="nuevoEvento.title" name="title" class="form-control" required>
-  </div>
-  <div class="mb-3">
-    <label>Descripción:</label>
-    <textarea [(ngModel)]="nuevoEvento.description" name="description" class="form-control"></textarea>
-  </div>
-  <div class="mb-3">
-    <label>Imagen:</label>
-    <input type="file" #fileInput (change)="changeImage(fileInput)" class="form-control">
-  </div>
-  <div class="row">
-    <div class="col">
-      <label>Fecha:</label>
-      <input type="date" [(ngModel)]="nuevoEvento.date" name="date" class="form-control">
+<div class="container mt-4">
+  <form (ngSubmit)="enviarFormulario()" #miForm="ngForm" class="p-4 border rounded bg-light shadow-sm">
+    <h3 class="mb-4">Nuevo Evento Deportivo</h3>
+
+    <div class="mb-3">
+      <label class="form-label">Título:</label>
+      <input type="text" [(ngModel)]="nuevoEvento.title" name="title" class="form-control" required>
     </div>
-    <div class="col">
-      <label>Precio:</label>
-      <input type="number" [(ngModel)]="nuevoEvento.price" name="price" class="form-control">
+
+    <div class="mb-3">
+      <label class="form-label">Descripción:</label>
+      <textarea [(ngModel)]="nuevoEvento.description" name="description" class="form-control" rows="3" required></textarea>
     </div>
-  </div>
-  <button type="submit" class="btn btn-success mt-3">Añadir</button>
-</form>
+
+    <div class="mb-3">
+      <label class="form-label">URL de la Imagen:</label>
+      <input type="text" [(ngModel)]="nuevoEvento.image" name="image" class="form-control" placeholder="https://ejemplo.com/foto.jpg">
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Fecha:</label>
+        <input type="date" [(ngModel)]="nuevoEvento.date" name="date" class="form-control" required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Precio:</label>
+        <div class="input-group">
+          <span class="input-group-text">€</span>
+          <input type="number" [(ngModel)]="nuevoEvento.price" name="price" class="form-control" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-success me-2" [disabled]="!miForm.valid">
+        Añadir Evento
+      </button>
+      <a routerLink="/eventos" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
